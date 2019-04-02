@@ -18,7 +18,6 @@ public class Main2Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        //obsługa buttonów
         Button button3 = (Button) findViewById(R.id.button3);//CANCEL
         button3.setOnClickListener(new View.OnClickListener(){
             @Override
