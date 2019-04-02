@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">zad1</string>
+    <string name="action_settings">Settings</string>
+    <string name="button1">CHANGE CONTACT</string>
+    <string name="button2">CHANGE SOUND</string>
+    <string name="name">Krystian</string>
+    <string name="button3">CANCEL</string>
+    <string name="button4">OK</string>
+    <string-array name="myContactArray">
+        <item>Krystian</item>
+        <item>Marta</item>
+        <item>Dominika</item>
+        <item>Wojciech</item>
+        <item>Stanislaw</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="Sound1">Sound1</string>
+    <string name="Sound2">Sound2</string>
+    <string name="Sound3">Sound3</string>
+    <string name="Sound4">Sound4</string>
+    <string name="Sound5">Sound5</string>
+    <string name="Sounds">Sounds</string>
+    <string name="button5">CANCEL</string>
+    <string name="button6">OK</string>
+    <string name="current_sound_str">kek</string>
+    <string name="current_sound_text">kek2</string>
+    <string name="back_message">back</string>
+</resources>

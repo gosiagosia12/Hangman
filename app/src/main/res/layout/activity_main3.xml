@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".Main3Activity">
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:weightSum="4"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    <RadioButton
+        android:id="@+id/sound1"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:checked="true"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/Sound1"
+        android:layout_height="50dp" />
+    <RadioButton
+        android:id="@+id/sound2"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/sound1"
+        android:layout_marginTop="20dp"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/Sound2"
+        android:layout_height="50dp" />
+    <RadioButton
+        android:id="@+id/sound3"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/sound2"
+        android:layout_marginTop="20dp"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/Sound3"
+        android:layout_height="50dp" />
+    <RadioButton
+        android:id="@+id/sound4"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/sound3"
+        android:layout_marginTop="20dp"
+        android:onClick="onRadioButtonClicked"
+        android:text="@string/Sound4"
+        android:layout_height="50dp" />
+        <RadioButton
+            android:id="@+id/sound5"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/sound3"
+            android:layout_marginTop="20dp"
+            android:onClick="onRadioButtonClicked"
+            android:text="@string/Sound5"
+            android:layout_height="50dp" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/button5"
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="220dp"
+        android:text="@string/button5"
+        app:layout_constraintBottom_toBottomOf="parent" />
+    <Button
+        android:layout_weight="4"
+        android:id="@+id/button6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/button6"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
