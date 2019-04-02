@@ -62,13 +62,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
-            @Override
-            public void onCompletion(MediaPlayer mp){
-                mp.start();
-            }
-        });
-
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
