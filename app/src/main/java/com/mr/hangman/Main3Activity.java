@@ -10,23 +10,21 @@ import android.widget.RadioButton;
 public class Main3Activity extends AppCompatActivity {
 
     private int selected_sound = 0;
+    private static final int ID = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main3);
-    //obsługa buttonów
         Button button6 = (Button) findViewById(R.id.button6);//OK
         button6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = getIntent();
-                Bundle bd = intent.getExtras();
-                String current_name = (String)bd.get("MESSAGE");
-                Intent startIntent1 = new Intent(getApplicationContext(), MainActivity.class);
-                startIntent1.putExtra("sound", selected_sound);
-                startIntent1.putExtra("MESSAGE", current_name);
-                startActivity(startIntent1);
+                Intent intent =  new Intent();
+                intent.putExtra("sound", selected_sound);
+                intent.putExtra("ID", 3);
+                setResult(RESULT_OK, intent);
+                finish();
             }
         });
 
@@ -34,19 +32,11 @@ public class Main3Activity extends AppCompatActivity {
         button5.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent = getIntent();
-                Bundle bd = intent.getExtras();
-                int current_sound = (int)bd.get("sound");
-                String current_name = (String)bd.get("MESSAGE");
-                Intent startIntent1 = new Intent(getApplicationContext(), MainActivity.class);
-                startIntent1.putExtra("sound", current_sound);
-                startIntent1.putExtra("MESSAGE", current_name);
-                startActivity(startIntent1);
+                finish();
             }
         });
     }
-    //obsługa buttonów
-    //wybór dźwięku - RadioButton
+
     public void onRadioButtonClicked(View view)
     {
         boolean checked = ((RadioButton) view).isChecked();
@@ -61,5 +51,5 @@ public class Main3Activity extends AppCompatActivity {
                 default: selected_sound = 0;
             }
         }
-    }//wybór dźwięku - RadioButton
+    }
 }

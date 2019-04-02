@@ -1,6 +1,7 @@
 package com.mr.hangman;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,10 +19,11 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int current_sound = 0;
+    private int current_sound = 1;
     private MediaPlayer buttonPlayer;
     private int pom = 0;
-    private static String current_name = "";
+    public String current_name = "";
+    public static final int CONTACT_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //losowanie obrazka
+        buttonPlayer = new MediaPlayer();
+        buttonPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         Random rand = new Random();
         int a = rand.nextInt(16);
         final ImageView obraz = findViewById(R.id.image_v);
@@ -47,117 +50,100 @@ public class MainActivity extends AppCompatActivity {
             case 10: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_11));break;
             case 11: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_12));break;
             case 12: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_13));break;
-            case 13: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_14));break;
-            case 14: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_15));break;
-            case 15: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_16));break;
+            case 13: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_15));break;
+            case 14: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_16));break;
             default: obraz.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.avatar_1));break;
         }
-        //losowanie obrazka
-    //wyświetlenie imienia
-        TextView name = findViewById(R.id.text_v);
-        Intent intent = getIntent();
-        Bundle bd = intent.getExtras();
-        if(intent.getStringExtra("MESSAGE")==null){
-            name.setText(getResources().getString(R.string.name));
-        }
-        else{
-            String getName = (String) bd.get("MESSAGE");
-            name.setText(getName);
-            current_name = getName;
-        }
-    //wyświetlenie imienia
-        //pause/start music
-        FloatingActionButton fab = findViewById(R.id.fab);
 
+        buttonPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener(){
+            @Override
+            public void onPrepared(MediaPlayer mp){
+                mp.start();
+            }
+        });
+
+        buttonPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+            @Override
+            public void onCompletion(MediaPlayer mp){
+                mp.start();
+            }
+        });
+
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(pom==1){
-                    onPause();
+                switch(pom){
+                    case 0:
+                        buttonPlayer.stop();
+                        pom=1;
+                        break;
+                    case 1:
+                        onResume();
+                        pom=0;
                 }
-                else
-                    onResume();
             }
         });
-        //pause/start music
 
-//obsługa buttonów i nowe intencje
-       Button button1 = (Button) findViewById(R.id.button1);
+       Button button1 = (Button) findViewById(R.id.button1);//contact
         button1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent startIntent2 = new Intent(getApplicationContext(), Main2Activity.class);
                 buttonPlayer.stop();
-                startIntent2.putExtra("MESSAGE", current_name);
-                startIntent2.putExtra("sound", current_sound);
-                startActivity(startIntent2);
+                Intent startIntent2 = new Intent(getApplicationContext(), Main2Activity.class);
+                startActivityForResult(startIntent2, CONTACT_REQUEST);
             }
         });
 
-        Button button2 = (Button) findViewById(R.id.button2);
+        Button button2 = (Button) findViewById(R.id.button2);//sound
         button2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent startIntent3 = new Intent(getApplicationContext(), Main3Activity.class);
                 buttonPlayer.stop();
-                startIntent3.putExtra("MESSAGE", current_name);
-                startIntent3.putExtra("sound", current_sound);
-                startActivity(startIntent3);
+                Intent startIntent3 = new Intent(getApplicationContext(), Main3Activity.class);
+                startActivityForResult(startIntent3, CONTACT_REQUEST);
             }
         });
-        //obsługa buttonów i nowe intencje
     }
 
-
-//funkcje mediaplayer
-    //@Override
-    protected void onPause(){
-        super.onPause();
-        buttonPlayer.pause();
-        pom=0;
-    }
-
-  //  @Override
     protected void onResume(){
 
         super.onResume();
-        //zwracanie wybranej piosenki z Intent 3
-        Intent intent3 = getIntent();
-        Bundle bd = intent3.getExtras();
-        if(bd==null){
-            switch(current_sound){
-                case 0: buttonPlayer = MediaPlayer.create(this, R.raw.ring01); break;
-                case 1: buttonPlayer = MediaPlayer.create(this, R.raw.ring02); break;
-                case 2: buttonPlayer = MediaPlayer.create(this, R.raw.ring03); break;
-                case 3: buttonPlayer = MediaPlayer.create(this, R.raw.ring04); break;
-                default: buttonPlayer = MediaPlayer.create(this, R.raw.mario); break;
-            }
-        }
-        else{
-            current_sound = intent3.getIntExtra("sound", current_sound);
-
-            switch(current_sound){
-                case 0: buttonPlayer = MediaPlayer.create(this, R.raw.ring01); break;
-                case 1: buttonPlayer = MediaPlayer.create(this, R.raw.ring02); break;
-                case 2: buttonPlayer = MediaPlayer.create(this, R.raw.ring03); break;
-                case 3: buttonPlayer = MediaPlayer.create(this, R.raw.ring04); break;
-                default: buttonPlayer = MediaPlayer.create(this, R.raw.mario); break;
-            }
+        switch(current_sound){
+            case 0: buttonPlayer = MediaPlayer.create(this, R.raw.ring01); break;
+            case 1: buttonPlayer = MediaPlayer.create(this, R.raw.ring02); break;
+            case 2: buttonPlayer = MediaPlayer.create(this, R.raw.ring03); break;
+            case 3: buttonPlayer = MediaPlayer.create(this, R.raw.ring04); break;
+            default: buttonPlayer = MediaPlayer.create(this, R.raw.mario); break;
         }
         buttonPlayer.start();
         buttonPlayer.setLooping(true);
-        pom=1;
-        //zwracanie wybranej piosenki z Intent 3
-
+        pom=0;
     }
 
-  //  @Override
-    protected void onStop(){
-        super.onStop();
-        buttonPlayer.release();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(resultCode == RESULT_OK){
+            int id = (int) data.getIntExtra("ID", 0);
+            switch(id){
+                case 2:
+                    current_name = data.getStringExtra("MESSAGE");
+                    TextView name = findViewById(R.id.text_v);
+                    if(current_name == null){
+                        name.setText(getResources().getString(R.string.name));
+                    }
+                    else{
+                        name.setText(current_name);
+                    }
+                    break;
+                case 3:
+                    current_sound = data.getIntExtra("sound", 0);
+                    break;
+            }
+        }
+        else if(resultCode == RESULT_CANCELED) {}
     }
 
-    //funkcje mediaplayer
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -170,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }
